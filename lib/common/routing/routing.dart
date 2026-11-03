@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shortest_path_searcher/features/search_path/presentation/pages/home_page.dart';
+import 'package:shortest_path_searcher/features/search_path/presentation/pages/process_page.dart';
 
 class RouteName {
   static const String homeScreen = 'homeScreen';
@@ -19,14 +19,13 @@ class RouteName {
 GoRouter createRouter() => GoRouter(
   initialLocation: '/',
   routes: [
-/*
     GoRoute(
       name: RouteName.homeScreen,
       path: '/',
       pageBuilder: (context, state) => buildPageWithPlatformTransition<void>(
         context: context,
         state: state,
-        child: const OnboardingPrimaryGoalPage(),
+        child: const HomePage(),
       ),
     ),
     GoRoute(
@@ -35,16 +34,17 @@ GoRouter createRouter() => GoRouter(
       pageBuilder: (context, state) => buildPageWithPlatformTransition<void>(
         context: context,
         state: state,
-        child: const OnboardingVisualizingSuccessPage(),
+        child: const ProcessPage(),
       ),
     ),
+/*
     GoRoute(
       name: RouteName.resultListScreen,
       path: '/${RouteName.resultListScreen}',
       pageBuilder: (context, state) => buildPageWithPlatformTransition<void>(
         context: context,
         state: state,
-        child: const OnboardingProvenResultsPage(),
+        child: const ResultListPage(),
       ),
     ),
     GoRoute(
@@ -53,7 +53,7 @@ GoRouter createRouter() => GoRouter(
       pageBuilder: (context, state) => buildPageWithPlatformTransition<void>(
         context: context,
         state: state,
-        child: const OnboardingVitaminsPage(),
+        child: const PreviewPage(),
       ),
     ),
 */

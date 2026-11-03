@@ -49,6 +49,10 @@ dependencies:
   #Storage
   shared_preferences: ^2.5.5
 
+  #Logger
+  talker: ^5.2.0
+  talker_flutter: ^5.2.0
+  talker_dio_logger: ^5.2.0
 
 dev_dependencies:
   flutter_test:

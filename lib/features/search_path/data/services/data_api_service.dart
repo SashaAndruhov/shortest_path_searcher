@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:shortest_path_searcher/features/search_path/data/models/data_for_processing_response.dart';
+import 'package:shortest_path_searcher/features/search_path/data/models/processing_result_model.dart';
+import 'package:shortest_path_searcher/features/search_path/data/models/send_results_response.dart';
 
 part 'data_api_service.g.dart';
 
@@ -12,8 +14,7 @@ abstract class DataApiService {
   @GET('{url}')
   Future<DataForProcessingResponse> getFieldsList(@Path() String url) ;
 
-  // @POST('/achievements/user/last-request/')
-  // Future<void> setAchievementsLastRequest(@Body() SetAchievementsLastRequest data);
-
+  @POST('{url}')
+  Future<SendResultsResponse> sendResults(@Path() String url, @Body() List<ProcessingResultModel> results);
 
 }
