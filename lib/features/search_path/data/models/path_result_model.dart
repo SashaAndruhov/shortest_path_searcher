@@ -16,6 +16,12 @@ class PathResultModel {
   final List<CoordinateModel>? steps;
   final String? path;
 
+  String get displayPath {
+    final steps = this.steps;
+    if (steps == null || steps.isEmpty) return 'No path found';
+    return steps.map((step) => '(${step.x}.${step.y})').join(' -> ');
+  }
+
 
   Map<String, dynamic> toJson() => _$PathResultModelToJson(this);
 

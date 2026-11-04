@@ -22,8 +22,9 @@ class Grid {
 
   int get width => _rows.isEmpty ? 0 : _rows.first.length;
 
-  bool contains(Point point) =>
-      point.y >= 0 && point.y < height && point.x >= 0 && point.x < _rows[point.y].length;
+  bool get isValid => height == width && height > 1 && height < 100;
+
+  bool contains(Point point) => point.y >= 0 && point.y < height && point.x >= 0 && point.x < _rows[point.y].length;
 
   bool isBlocked(Point point) => _rows[point.y][point.x] == _blockedCell;
 

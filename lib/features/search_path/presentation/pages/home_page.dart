@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shortest_path_searcher/common/routing/routing.dart';
+import 'package:shortest_path_searcher/common/widgets/app_button.dart';
 import 'package:shortest_path_searcher/features/search_path/presentation/managers/home_page_cubit.dart';
 
 class HomePage extends StatefulWidget {
@@ -49,7 +50,8 @@ class _HomePageState extends State<HomePage> {
             ),
             BlocListener<HomePageCubit, HomePageState>(
               listenWhen: (previous, current) =>
-                  current.errorMessage != null && previous.errorMessage != current.errorMessage,
+                  current.errorMessage != null &&
+                  previous.errorMessage != current.errorMessage,
               listener: (context, state) {
                 ScaffoldMessenger.of(context)
                   ..hideCurrentSnackBar()
@@ -57,56 +59,60 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             BlocListener<HomePageCubit, HomePageState>(
-              listenWhen: (previous, current) => !previous.isLoaded && current.isLoaded,
-              listener: (context, state) => context.pushNamed(RouteName.processScreen),
+              listenWhen: (previous, current) =>
+                  !previous.isLoaded && current.isLoaded,
+              listener: (context, state) =>
+                  context.pushNamed(RouteName.processScreen),
             ),
           ],
           child: BlocBuilder<HomePageCubit, HomePageState>(
             builder: (blockContext, state) {
               return SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      const Text('Set valid API base URL in order to continue'),
-                      const SizedBox(height: 16),
-                      Row(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          const Icon(Icons.compare_arrows),
-                          SizedBox(width: 16,),
-                          Expanded(
-                            child: TextField(
-                              controller: _urlController,
-                              enabled: !state.isLoading,
-                              keyboardType: TextInputType.url,
-                              textInputAction: TextInputAction.done,
-                              autocorrect: false,
-                              decoration: InputDecoration(
-                                errorText: state.validationError,
+                          const Text(
+                            'Set valid API base URL in order to continue',
+                            style: TextStyle(fontSize: 13),
+                          ),
+                          const SizedBox(height: 16),
+                          Row(
+                            children: [
+                              const Icon(Icons.compare_arrows),
+                              SizedBox(width: 16),
+                              Expanded(
+                                child: TextField(
+                                  controller: _urlController,
+                                  enabled: !state.isLoading,
+                                  keyboardType: TextInputType.url,
+                                  textInputAction: TextInputAction.done,
+                                  autocorrect: false,
+                                  decoration: InputDecoration(
+                                    errorText: state.validationError,
+                                  ),
+                                  onChanged: blockContext
+                                      .read<HomePageCubit>()
+                                      .onUrlChanged,
+                                  onSubmitted: (_) => _onStart(),
+                                ),
                               ),
-                              onChanged: blockContext.read<HomePageCubit>().onUrlChanged,
-                              onSubmitted: (_) => _onStart(),
-                            ),
+                            ],
                           ),
                         ],
                       ),
-                      const Spacer(),
-                      SizedBox(
-                        height: 48,
-                        child: ElevatedButton(
-                          onPressed: state.isLoading ? null : _onStart,
-                          child: state.isLoading
-                              ? const SizedBox(
-                                  width: 20,
-                                  height: 20,
-                                  child: CircularProgressIndicator(strokeWidth: 2),
-                                )
-                              : const Text('Start counting process'),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                    const Spacer(),
+                    AppButton(
+                      text: 'Start counting process',
+                      isLoading: state.isLoading,
+                      onPressed: _onStart,
+                    ),
+                  ],
                 ),
               );
             },
@@ -115,5 +121,4 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
 }

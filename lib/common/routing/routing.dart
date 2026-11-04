@@ -4,7 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shortest_path_searcher/features/search_path/presentation/pages/home_page.dart';
+import 'package:shortest_path_searcher/features/search_path/data/models/processing_result_model.dart';
+import 'package:shortest_path_searcher/features/search_path/presentation/pages/preview_page.dart';
 import 'package:shortest_path_searcher/features/search_path/presentation/pages/process_page.dart';
+import 'package:shortest_path_searcher/features/search_path/presentation/pages/result_list_page.dart';
 
 class RouteName {
   static const String homeScreen = 'homeScreen';
@@ -37,14 +40,15 @@ GoRouter createRouter() => GoRouter(
         child: const ProcessPage(),
       ),
     ),
-/*
     GoRoute(
       name: RouteName.resultListScreen,
       path: '/${RouteName.resultListScreen}',
       pageBuilder: (context, state) => buildPageWithPlatformTransition<void>(
         context: context,
         state: state,
-        child: const ResultListPage(),
+        child: ResultListPage(
+          results: state.extra as List<ProcessingResultModel>? ?? const [],
+        ),
       ),
     ),
     GoRoute(
@@ -53,10 +57,9 @@ GoRouter createRouter() => GoRouter(
       pageBuilder: (context, state) => buildPageWithPlatformTransition<void>(
         context: context,
         state: state,
-        child: const PreviewPage(),
+        child: PreviewPage(result: state.extra as ProcessingResultModel),
       ),
     ),
-*/
   ],
 );
 
